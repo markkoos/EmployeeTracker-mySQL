@@ -14,4 +14,4 @@ const cTable = require(`console.table`);
 //     }
 // );
 
-startMenu()
+startMenu();
