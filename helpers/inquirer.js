@@ -9,7 +9,7 @@ const e = require('express');
 // Imports protect file with sensitive information
 require('dotenv').config()
 
-                    // Connects to MySQL and USES database
+//---------------------------------------------------------------Connects to MySQL and USES database------------------------------------------------------------------
 const db = mysql.createConnection (
     {
         host: process.env.myHost,
@@ -18,8 +18,7 @@ const db = mysql.createConnection (
         database: process.env.myDatabase
     }
 );
-
-                            // PROMPTS & QUERIES
+//-----------------------------------------------------------------------PROMPTS & QUERIES-----------------------------------------------------------------------------
 const addEmployee = () => {
     inquirer.prompt ([
         {
