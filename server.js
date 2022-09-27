@@ -2,7 +2,7 @@ const express = require(`express`);
 const inquirer = require(`inquirer`);
 
 // helper file with inquirer prompts and db queries
-const { viewAllRoles, addEmployee } = require(`./helpers/inquirer`);
+const { viewAllRoles, addEmployee, viewAllEmployees, viewAllDepartments, updateRole } = require(`./helpers/inquirer`);
 
 // Import console.table node module
 const cTable = require(`console.table`);
@@ -32,52 +32,39 @@ const startMenu = () => {
                     `Add Role`,
                     `View All Departments`,
                     `Add Department`,
+                    `Exit`
                 ],
             },
         ])
     .then((answer) => {
+                         // IMPORTED QUERIES FOR EVERY CHOICE
             switch (answer.startChoice) {
                 case `View All Employees`:
-                    // Imported query for viewing all employees
-                    viewAllRoles();
+                    viewAllEmployees();
                     break;
                 case `Add Employee`:
-                    // Imported prompt and query for adding an employee
                     addEmployee();
                     break;
                 case `Update Employee Role`:
-                    // Imported prompt and query for updating an employee's role
-                    console.log(`update employee role chosen`);
+                    updateRole();
                     break;
                 case `View All Roles`:
-                    // Imported query to view all the roles
-                    db.query(viewRoles, (error, data) => {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.table(data);
-                        }
-                    })
+                    viewAllRoles();
                     break;
                 case `Add Role`:
-                    // Imported prompt and query for adding a role
+                    // FUNCTION NOT DONE
                     console.log(`add role chosen`);
                     break;                
                 case `View All Departments`:
-                    // Imported query for viewing all departments
-                    db.query(viewDepartments, (error, data) => {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.table(data);
-                        }
-                    })
+                    viewAllDepartments();
                     break;
                 case `Add Department`:
-                    // Imported prompt and query for adding a department
+                    // FUNCTION NOT DONE
                     console.log(`Add Department chosen`);
                     break;            
-                
+                case `Exit`:
+                    console.log(`Exiting program`);
+                    break;
             };
         })
 }
