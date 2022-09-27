@@ -1,11 +1,11 @@
 const express = require(`express`);
 const inquirer = require(`inquirer`);
 
+// node package to kill server port 
+const kill = require(`kill-port`);
+
 // helper file with inquirer prompts and db queries
 const { viewAllRoles, addEmployee, viewAllEmployees, viewAllDepartments, updateRole } = require(`./helpers/inquirer`);
-
-// Import console.table node module
-const cTable = require(`console.table`);
 
 // Import dotenv to have secure data
 require('dotenv').config()
@@ -64,6 +64,7 @@ const startMenu = () => {
                     break;            
                 case `Exit`:
                     console.log(`Exiting program`);
+                    kill(PORT, `tcp`);
                     break;
             };
         })

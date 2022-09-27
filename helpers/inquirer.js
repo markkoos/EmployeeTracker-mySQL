@@ -19,7 +19,7 @@ const db = mysql.createConnection (
     }
 );
 
-                                // PROMPTS & QUERIES
+                            // PROMPTS & QUERIES
 const addEmployee = () => {
     inquirer.prompt ([
         {
@@ -114,8 +114,10 @@ const updateRole = () => {
                 })
             }) 
         })
-    })
-    
+    })};
+
+const addRole = () => {
+    const startMenu = require(`../server`);
 }
         
 const viewAllRoles = () => { 
@@ -127,8 +129,7 @@ const viewAllRoles = () => {
             console.table(data);
             startMenu();
         }
-    })
-    };
+    })};
 
 const viewAllEmployees = () => {
     const startMenu = require(`../server`);
