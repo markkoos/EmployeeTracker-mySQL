@@ -1,50 +1,75 @@
 const inquirer = require(`inquirer`);
 const mysql = require(`mysql2`);
+const cTable = require(`console.table`);
+const startMenu = require(`../server`);
+const map = require(`map`);
 
-const startMenu = () => {
-    inquirer.prompt (
+// Imported query variables for every selected option
+const {viewAll, viewRoles, viewDepartments} = require(`./sqlQuery`);
+// Imports protect file with sensitive information
+require('dotenv').config()
+
+                    // Connects to MySQL and USES database
+const db = mysql.createConnection (
+    {
+        host: process.env.myHost,
+        user: process.env.myUser,
+        password: process.env.myPassword,
+        database: process.env.myDatabase
+    }
+);
+
+                                // PROMPTS
+const addEmployee = () => {
+    inquirer.prompt ([
         {
-            type: `list`,
-            message: `What would you like to do?`,
-            name: `startChoice`,
-            choices: [
-                `View All Employees`,
-                `Add Employee`,
-                `Update Employee Role`,
-                `View All Roles`,
-                `Add Role`,
-                `View All Departments`,
-                `Add Department`,
-            ],
+            type: `input`,
+            name: `first`,
+            message: `Enter the employee's first name.`
         },
-    )
-    .then((answer) => {
-        switch (answer.startChoice) {
-            case `View All Employees`:
-                console.log(`view all employees chosen`);
-                break;
-            case `Add Employee`:
-                console.log(`add employee chosen`);
-                break;
-            case `Update Employee Role`:
-                console.log(`update employee role chosen`);
-                break;
-            case `View All Roles`:
-                console.log(`view all roles chosen`);
-                break;
-            case `Add Role`:
-                console.log(`add role chosen`);
-                break;                
-            case `View All Departments`:
-                console.log(`view all departments chosen`);
-                break;
-            case `Add Department`:
-                console.log(`Add Department chosen`);
-                break;            
-            
-        };
-        startMenu();
+        {
+            type: `input`,
+            name: `last`,
+            message: `Enter the employee's last name.`
+        },
+    ])
+    .then((name) => {
+        const startMenu = require(`../server`);
+        const employee = [name.first, name.last];
+        console.log(employee);
+        db.promise().query(`SELECT roles.id, roles.title FROM roles`)
+        .then(((data) => { 
+            const roleList = data[0].map(({id, title}) => ({value: id, name: title}))
+            inquirer.prompt ([
+                {
+                    type: `list`,
+                    name: `roleOption`,
+                    message: `Assign a role to the employee.`,
+                    choices: roleList
+                }
+            ])
+            .then((roleData) => {
+                employee.push(roleData.roleOption)
+                console.log(employee);
+                db.promise().query(`INSERT INTO employees (first_name, last_name, role_id) VALUES (${employee[0]}, ${employee[1]}, ${employee[2]})`)
+                .then(() => {
+                    console.log(`Employee has been added to the database!`)
+                    startMenu();
+                })
+            })
+        }))
+    })}
+        
+const viewAllRoles = () => { 
+    const startMenu = require(`../server`);
+    db.query(viewRoles, (error, data) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.table(data);
+            startMenu();
+        }
     })
-}
+    }
 
-module.exports = startMenu;
+module.exports = { addEmployee, viewAllRoles };
