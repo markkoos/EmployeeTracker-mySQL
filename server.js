@@ -58,11 +58,11 @@ const startMenu = () => {
                     viewAllDepartments();
                     break;
                 case `Add Department`:
-                    // FUNCTION NOT DONE
                     addDatabase();
                     break;            
                 case `Exit`:
                     console.log(`Exiting program..`);
+                // Kills the live port
                     kill(PORT, `tcp`);
                     break;
             };
