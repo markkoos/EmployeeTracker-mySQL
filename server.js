@@ -5,7 +5,7 @@ const inquirer = require(`inquirer`);
 const kill = require(`kill-port`);
 
 // helper file with inquirer prompts and db queries
-const { viewAllRoles, addEmployee, viewAllEmployees, viewAllDepartments, updateRole } = require(`./helpers/inquirer`);
+const { viewAllRoles, addEmployee, viewAllEmployees, viewAllDepartments, updateRole, addRole } = require(`./helpers/inquirer`);
 
 // Import dotenv to have secure data
 require('dotenv').config()
@@ -37,7 +37,7 @@ const startMenu = () => {
             },
         ])
     .then((answer) => {
-                         // IMPORTED QUERIES FOR EVERY CHOICE
+            // IMPORTED QUERIES FOR EVERY CHOICE
             switch (answer.startChoice) {
                 case `View All Employees`:
                     viewAllEmployees();
@@ -53,7 +53,7 @@ const startMenu = () => {
                     break;
                 case `Add Role`:
                     // FUNCTION NOT DONE
-                    console.log(`add role chosen`);
+                    addRole();
                     break;                
                 case `View All Departments`:
                     viewAllDepartments();
@@ -63,7 +63,7 @@ const startMenu = () => {
                     console.log(`Add Department chosen`);
                     break;            
                 case `Exit`:
-                    console.log(`Exiting program`);
+                    console.log(`Exiting program..`);
                     kill(PORT, `tcp`);
                     break;
             };
