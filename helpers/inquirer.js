@@ -3,7 +3,7 @@ const mysql = require(`mysql2`);
 const cTable = require(`console.table`);
 const map = require(`map`);
 
-// Imported query variables for every selected option
+// Imported some query variables for selected options
 const {viewAll, viewRoles, viewDepartments} = require(`./sqlQuery`);
 const e = require('express');
 // Imports protect file with sensitive information
