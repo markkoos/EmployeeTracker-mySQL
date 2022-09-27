@@ -118,7 +118,6 @@ const updateRole = () => {
 
 const addRole = () => {
     const startMenu = require(`../server`);
-    
     db.promise().query(viewDepartments)
     .then((data) => {
         const depList = data[0].map(({id, name}) => ({value: id, name: name}))
@@ -148,8 +147,25 @@ const addRole = () => {
             })
         })
     })
-    
-    
+};
+
+const addDatabase = () => {
+    const startMenu = require(`../server`);
+    inquirer.prompt([
+        {
+            type: `input`,
+            name: `name`,
+            message: `What is the name of the department?` 
+        }
+    ])
+    .then((data) => {
+        const depData = [JSON.stringify(data.name)];
+        db.promise().query(`INSERT INTO departments (name) VALUES (${depData[0]});`)
+        .then(() => {
+            console.log(`Department successfully added!`);
+            startMenu();
+        })
+    })
 }
         
 const viewAllRoles = () => { 
@@ -186,4 +202,4 @@ const viewAllDepartments = () => {
         }
     })
 }
-module.exports = { addEmployee, viewAllRoles, viewAllEmployees, viewAllDepartments, updateRole, addRole };
+module.exports = { addEmployee, viewAllRoles, viewAllEmployees, viewAllDepartments, updateRole, addRole, addDatabase };
