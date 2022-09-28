@@ -13,7 +13,7 @@ Allows the user to interact with a MySQL database of employees and add/change th
 - [Questions](questions)
 
 ### Installation
-Enter "npm i" into your GitBash and allow the node modules to install
+Create a .env file containing MySQL login information within the root directory of the project. Then enter "npm i" into your GitBash and allow the node modules to install
 
 ### Usage Information
 Enter "npm start" into your GitBash terminal and navigate through the given menu.
